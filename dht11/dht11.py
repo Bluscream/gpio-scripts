@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from urllib import request
+from urllib.parse import quote_plus, urlencode
 from time import sleep
 import board
 import adafruit_dht
@@ -38,28 +39,54 @@ def write_metrics(temperature_c, temperature_f, humidity):
         f.write(metrics.format(temperature_c=temperature_c,temperature_f=temperature_f,humidity=humidity))
 
 def automagic(path = "/", query = {}):
-    try: f = request.urlopen(f'http://192.168.2.38:1122/{path}?password=buffalo911&{urlencode(query, quote_via=quote_plus)}', timeout=.5)
+    try: f = request.urlopen(f'http://192.168.2.38:1122/{path}?password=gast&{urlencode(query, quote_via=quote_plus)}', timeout=.5)
     except: pass
 
+detections_temp = 0
+detections_humidity = 0
+errors = 0
+limit_temp_c = 50
+limit_humidity = 50
+firstrun = True
 while True:
     try:
         # Print the values to the serial port
         temperature_c = dhtDevice.temperature
         temperature_f = temperature_c * (9 / 5) + 32
         humidity = dhtDevice.humidity
-        print(
-            "Temp: {:.1f} F / {:.1f} C    Humidity: {}% ".format(
-                temperature_f, temperature_c, humidity
-            )
-        )
- 
+        write_metrics(temperature_c, temperature_f, humidity)
+        heat_alarm = temperature_c > limit_temp_c
+        humid_alarm = humidity > limit_humidity
+        if heat_alarm or humid_alarm:
+            message = "Temp: {:.1f}°C / {:.1f}°F\n\nHumidity: {}% ".format(temperature_f, temperature_c, humidity)
+            title = "Alerting "
+            if heat_alarm and not detections_temp:
+                detections_temp += 1
+                buzz(100,50)
+                title += "Heat "
+            if humid_alarm and not detections_humidity:
+                detections_humidity += 1
+                buzz(50,100)
+                title += "Humidity"
+            automagic("screen/on")
+            automagic("popup/show", {"title": title, "message": message}) #, "action": "http://automater.pi/metrics"})
+            automagic("notification/create", {"title": title, "message": message, "icon": "app.icon://com.android.cellbroadcastreceiver"})
+            automagic("vibrate", {"pattern": "1000,1000", "repeat": "2"})
+            if firstrun: break
+        else:
+            detections_temp = 0
+            detections_humidity = 0
+        errors = 0
+
     except RuntimeError as error:
-        # Errors happen fairly often, DHT's are hard to read, just keep going
-        print(error.args[0])
-        time.sleep(2.0)
+        errors += 1
+        print(f"[{errors}] {error.args[0]}")
+        sleep(2.0)
         continue
     except Exception as error:
         dhtDevice.exit()
+        buzz(1000)
+        automagic("notification/create", {"title": "DHT11 SHUT DOWN", "message": f"Too many errors: {errors}\n\n{error.args[0]}", "icon": "app.icon://com.android.cellbroadcastreceiver"})
         raise error
- 
-    time.sleep(1.0)
+    sleep(1.0)
+    firstrun = False

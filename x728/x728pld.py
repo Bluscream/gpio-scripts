@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import struct
 import RPi.GPIO as GPIO
-import time
+from time import sleep
 from urllib import request
 from urllib.parse import urlencode, quote_plus
 from subprocess import run, PIPE
@@ -31,16 +31,16 @@ def write_metrics(battery_capacity, battery_voltage, ac_power_loss, cpu_voltage)
         f.write(metrics.format(battery_capacity=battery_capacity,battery_voltage=battery_voltage,ac_power=int(not ac_power_loss),cpu_voltage=cpu_voltage))
 
 def automagic(path = "/", query = {}):
-    try: f = request.urlopen(f'http://192.168.2.38:1122/{path}?password=buffalo911&{urlencode(query, quote_via=quote_plus)}', timeout=.5)
+    try: f = request.urlopen(f'http://192.168.2.38:1122/{path}?password=gast&{urlencode(query, quote_via=quote_plus)}', timeout=.5)
     except: pass
 
 BUZZER_PIN = 20
 def buzz(duration_ms=200,delay_ms=0):
     GPIO.setup(BUZZER_PIN, GPIO.OUT)
     GPIO.output(BUZZER_PIN, 1)
-    time.sleep(duration_ms/1000)
+    sleep(duration_ms/1000)
     GPIO.output(BUZZER_PIN, 0)
-    time.sleep(delay_ms/1000)
+    sleep(delay_ms/1000)
 
 def get_cpu_voltage():
     return run(['vcgencmd', 'measure_volts', "core"], stdout=PIPE).stdout.decode('utf-8').replace("volt=","")[:-2]
@@ -63,6 +63,7 @@ GPIO.setup(GPIO_PORT, GPIO.OUT)
 
 bus = smbus.SMBus(1) # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
 had_power_loss = False
+firstrun = True
 while True:
     ac_power_loss = GPIO.input(PLD_PIN)
     battery_capacity = readCapacity(bus).strip()
@@ -84,7 +85,8 @@ while True:
         automagic("popup/show", {"title": title, "message": message}) #, "action": "http://automater.pi/metrics"})
         automagic("notification/create", {"title": title, "message": message, "icon": "app.icon://com.android.cellbroadcastreceiver"})
         automagic("vibrate", {"pattern": "1000,1000", "repeat": "2"})
-        time.sleep(28)
-
-    time.sleep(2)
+        sleep(28)
+    if firstrun and ac_power_loss: break
+    firstrun = False
+    sleep(2)
 

@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 from urllib import request
+from urllib.parse import quote_plus, urlencode
 import RPi.GPIO as GPIO
 from time import sleep
+
+silent = False
 
 # change these as desired - they're the pins connected from the
 # SPI port on the ADC to the Cobbler
@@ -14,11 +17,12 @@ mq2_apin = 0
 
 BUZZER_PIN = 20
 def buzz(duration_ms=200,delay_ms=0):
-    GPIO.setup(BUZZER_PIN, GPIO.OUT)
-    GPIO.output(BUZZER_PIN, 1)
-    sleep(duration_ms/1000)
-    GPIO.output(BUZZER_PIN, 0)
-    sleep(delay_ms/1000)
+        if not silent:
+                GPIO.setup(BUZZER_PIN, GPIO.OUT)
+                GPIO.output(BUZZER_PIN, 1)
+                sleep(duration_ms/1000)
+                GPIO.output(BUZZER_PIN, 0)
+        sleep(delay_ms/1000)
 
 metrics = """
 # HELP node_gas_leaking Gas Leak / Smoke Detected
@@ -33,24 +37,23 @@ node_mq2_adc_voltage {adc_voltage}
 """
 
 def write_metrics(gas_leaking, gas_detections, adc_voltage):
-    with open("/var/www/html/metrics/mq2", 'w+', encoding = 'utf-8') as f:
-        f.write(metrics.format(gas_leaking=gas_leaking,gas_detections=gas_detections,adc_voltage=adc_voltage))
+        with open("/var/www/html/metrics/mq2", 'w+', encoding = 'utf-8') as f:
+                f.write(metrics.format(gas_leaking=gas_leaking,gas_detections=gas_detections,adc_voltage=adc_voltage))
 
 def automagic(path = "/", query = {}):
-    try: f = request.urlopen(f'http://192.168.2.38:1122/{path}?password=buffalo911&{urlencode(query, quote_via=quote_plus)}', timeout=.5)
-    except: pass
+        try: f = request.urlopen(f'http://192.168.2.38:1122/{path}?password=gast&{urlencode(query, quote_via=quote_plus)}', timeout=.5)
+        except: pass
 
-#port init
 def init():
-         GPIO.setwarnings(False)
-         # GPIO.cleanup()			#clean up at the end of your script
-         GPIO.setmode(GPIO.BCM)		#to specify whilch pin numbering system
-         # set up the SPI interface pins
-         GPIO.setup(SPIMOSI, GPIO.OUT)
-         GPIO.setup(SPIMISO, GPIO.IN)
-         GPIO.setup(SPICLK, GPIO.OUT)
-         GPIO.setup(SPICS, GPIO.OUT)
-         GPIO.setup(mq2_dpin,GPIO.IN,pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setwarnings(False)
+        # GPIO.cleanup()			#clean up at the end of your script
+        GPIO.setmode(GPIO.BCM)		#to specify whilch pin numbering system
+        # set up the SPI interface pins
+        GPIO.setup(SPIMOSI, GPIO.OUT)
+        GPIO.setup(SPIMISO, GPIO.IN)
+        GPIO.setup(SPICLK, GPIO.OUT)
+        GPIO.setup(SPICS, GPIO.OUT)
+        GPIO.setup(mq2_dpin,GPIO.IN,pull_up_down=GPIO.PUD_DOWN)
 
 #read SPI data from MCP3008(or MCP3204) chip,8 possible adc's (0 thru 7)
 def readadc(adcnum, clockpin, mosipin, misopin, cspin):
@@ -83,34 +86,44 @@ def readadc(adcnum, clockpin, mosipin, misopin, cspin):
                         adcout |= 0x1
 
         GPIO.output(cspin, True)
-        
+
         adcout >>= 1       # first bit is 'null' so drop it
         return adcout
-#main ioop
+
 def main():
-         init()
-         print("please wait...")
-         time.sleep(1)
-         # count = 0
-         detections = 0
-         while True:
-                  # count += 1
-                  COlevel=readadc(mq2_apin, SPICLK, SPIMOSI, SPIMISO, SPICS)
-                  leaking = not GPIO.input(mq2_dpin)
-                  voltage = ((COlevel/1024.)*3.3)
-                  write_metrics(int(leaking), detections, voltage)
-                  if leaking: detections += 1
-                  # print(f"{count} > [{'x' if leaking else 0}] {'%.2f'%voltage} V ({detections} detections)")
-                  if leaking: buzz(50,50)
-                  else: time.sleep(0.25)
-                  if detections and not leaking: detections = 0
-                           
+        init()
+        print("please wait...")
+        sleep(1)
+        # count = 0
+        detections = 0
+        firstrun = True
+        while True:
+                # count += 1
+                COlevel=readadc(mq2_apin, SPICLK, SPIMOSI, SPIMISO, SPICS)
+                leaking = not GPIO.input(mq2_dpin)
+                voltage = ((COlevel/1024.)*3.3)
+                write_metrics(int(leaking), detections, voltage)
+                if leaking:
+                        detections += 1
+                        buzz(50,50)
+                        if detections == 1:
+                                automagic("screen/on")
+                                title = "Gas Leakage or Smoke Detected!"
+                                message = f"{'%.2f'%voltage} V ({detections} detections)"
+                                automagic("popup/show", {"title": title, "message": message}) #, "action": "http://automater.pi/metrics"})
+                                automagic("notification/create", {"title": title, "message": message, "icon": "app.icon://com.android.cellbroadcastreceiver"})
+                                automagic("vibrate", {"pattern": "1000,1000", "repeat": "2"})
+                                # print(f"{count} > [{'x' if leaking else 0}] ")
+                else: sleep(0.25)
+                if detections and not leaking: detections = 0
+                if firstrun and leaking: break
+                firstrun = False
 
 if __name__ =='__main__':
-         try:
-                  main()
-                  pass
-         except KeyboardInterrupt:
-                  pass
+        try:
+                main()
+                pass
+        except KeyboardInterrupt:
+                pass
 
 GPIO.cleanup()
