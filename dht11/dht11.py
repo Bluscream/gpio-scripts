@@ -25,18 +25,15 @@ def buzz(duration_ms=200,delay_ms=0):
 metrics = """
 # HELP room_ambient_temperature_celsius Room ambient temperature (Celsius)
 # TYPE room_ambient_temperature_celsius gauge
-room_ambient_temperature_celsius {temperature_c}
-# HELP room_ambient_temperature_fahrenheit Room ambient temperature (Fahrenheit)
-# TYPE room_ambient_temperature_fahrenheit gauge
-room_ambient_temperature_fahrenheit {temperature_f}
+room_ambient_temperature_celsius{{sensor="DHT11", room="Room 1"}} {temperature_c}
 # HELP room_ambient_humidity Room ambient humidity
 # TYPE room_ambient_humidity gauge
 room_ambient_humidity {humidity}
 """
 
-def write_metrics(temperature_c, temperature_f, humidity):
+def write_metrics(temperature_c, humidity):
     with open("/var/www/html/metrics/dht11", 'w+', encoding = 'utf-8') as f:
-        f.write(metrics.format(temperature_c=temperature_c,temperature_f=temperature_f,humidity=humidity))
+        f.write(metrics.format(temperature_c=temperature_c,humidity=humidity))
 
 def automagic(path = "/", query = {}):
     try: f = request.urlopen(f'http://192.168.2.38:1122/{path}?password=gast&{urlencode(query, quote_via=quote_plus)}', timeout=.5)
@@ -51,10 +48,10 @@ firstrun = True
 while True:
     try:
         # Print the values to the serial port
-        temperature_c = dhtDevice.temperature
+        temperature_c = dhtDevice.temperature - 5
         temperature_f = temperature_c * (9 / 5) + 32
         humidity = dhtDevice.humidity
-        write_metrics(temperature_c, temperature_f, humidity)
+        write_metrics('{:.1f}'.format(temperature_c), humidity)
         heat_alarm = temperature_c > limit_temp_c
         humid_alarm = humidity > limit_humidity
         if heat_alarm or humid_alarm:
