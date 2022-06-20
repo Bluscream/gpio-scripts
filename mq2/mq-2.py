@@ -3,6 +3,7 @@ from urllib import request
 from urllib.parse import quote_plus, urlencode
 import RPi.GPIO as GPIO
 from time import sleep
+from os import path, remove
 
 silent = False
 
@@ -24,6 +25,7 @@ def buzz(duration_ms=200,delay_ms=0):
                 GPIO.output(BUZZER_PIN, 0)
         sleep(delay_ms/1000)
 
+metrics_file = "/var/www/html/metrics/mq2"
 metrics = """
 # HELP node_gas_leaking Gas Leak / Smoke Detected
 # TYPE node_gas_leaking gauge
@@ -37,7 +39,7 @@ node_mq2_adc_voltage {adc_voltage}
 """
 
 def write_metrics(gas_leaking, gas_detections, adc_voltage):
-        with open("/var/www/html/metrics/mq2", 'w+', encoding = 'utf-8') as f:
+        with open(metrics_file, 'w+', encoding = 'utf-8') as f:
                 f.write(metrics.format(gas_leaking=gas_leaking,gas_detections=gas_detections,adc_voltage=adc_voltage))
 
 def automagic(path = "/", query = {}):
@@ -127,3 +129,4 @@ if __name__ =='__main__':
                 pass
 
 GPIO.cleanup()
+if path.exists(metrics_file): remove(metrics_file)

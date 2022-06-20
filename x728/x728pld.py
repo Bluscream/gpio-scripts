@@ -6,11 +6,13 @@ from urllib import request
 from urllib.parse import urlencode, quote_plus
 from subprocess import run, PIPE
 import smbus2 as smbus
+from os import path, remove
 
 GPIO_PORT = 26
 I2C_ADDR = 0x36
 PLD_PIN = 6
 
+metrics_file = "/var/www/html/metrics/x728"
 metrics = """
 # HELP node_ac_power A/C Power
 # TYPE node_ac_power gauge
@@ -27,7 +29,7 @@ node_cpu_voltage {cpu_voltage}
 """
 
 def write_metrics(battery_capacity, battery_voltage, ac_power_loss, cpu_voltage):
-    with open("/var/www/html/metrics/x728", 'w+', encoding = 'utf-8') as f:
+    with open(metrics_file, 'w+', encoding = 'utf-8') as f:
         f.write(metrics.format(battery_capacity=battery_capacity,battery_voltage=battery_voltage,ac_power=int(not ac_power_loss),cpu_voltage=cpu_voltage))
 
 def automagic(path = "/", query = {}):
@@ -90,3 +92,4 @@ while True:
     firstrun = False
     sleep(2)
 
+if path.exists(metrics_file): remove(metrics_file)

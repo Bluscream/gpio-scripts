@@ -37,7 +37,7 @@ def write_metrics(temperature_c, temperature_f):
 
 from base64 import b64decode as b64d
 def automagic(path = "/", query = {}):
-        try: f = request.urlopen(f'http://192.168.2.38:1122/{path}?password={b64d("Z2FzdA")}&{urlencode(query, quote_via=quote_plus)}', timeout=.5)
+        try: request.urlopen(f'http://192.168.2.38:1122/{path}?password={b64d("Z2FzdA")}&{urlencode(query, quote_via=quote_plus)}', timeout=.5)
         except: pass
 
 # SPDX-FileCopyrightText: 2019 Mikey Sklar for Adafruit Industries
@@ -51,8 +51,7 @@ device_folder = glob(base_dir + '28*')
 print(device_folder)
 if len(device_folder) < 1:
         if path.exists(metrics_file): remove(metrics_file)
-device_folder = device_folder[0]
-device_file = device_folder + '/w1_slave'
+device_file = device_folder[0] + '/w1_slave'
 
 def read_temp_raw():
         lines = []
@@ -82,3 +81,5 @@ while True:
                 write_metrics(temp[0], temp[1])
                 count = 0
         sleep(.5)
+
+if path.exists(metrics_file): remove(metrics_file)
