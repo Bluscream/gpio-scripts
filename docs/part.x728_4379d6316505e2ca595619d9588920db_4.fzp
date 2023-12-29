@@ -1,0 +1,255 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module fritzingVersion="0.3.9b.10.15.3559" moduleId="x728_4379d6316505e2ca595619d9588920db_4" referenceFile="battery-AA.fzp">
+ <version>4</version>
+ <author>Bluscream</author>
+ <title>x728 Battery Pack UPS</title>
+ <label>x728 Battery Pack UPS</label>
+ <date>Wed Dec 14 2022</date>
+ <tags>
+  <tag>power supply</tag>
+  <tag>ups</tag>
+  <tag>Battery</tag>
+  <tag>fritzing core</tag>
+ </tags>
+ <properties>
+  <property name="family">battery</property>
+  <property name="variant">v2.3</property>
+  <property name="layer"></property>
+  <property name="voltage">5V</property>
+  <property name="part number"></property>
+ </properties>
+ <description>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:9px; margin-bottom:9px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#181a1b;">&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#d3cfc9; background-color:#181a1b;">The X728 is an advanced uninterruptible power supply expansion board for all current models of the Raspberry Pi using a 40 pin header.&lt;/span>&lt;/p>
+&lt;p style=" margin-top:9px; margin-bottom:9px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#181a1b;">&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#d3cfc9; background-color:#181a1b;">It provides 5.1V 6000mA Power Backup for even the most demanding Raspberry Pi set ups, intelligent and safe power management, safe shutdown，AC power loss/ power adapter failure detection , auto power-on, full poweroff from software, and a real- time clock.&lt;/span>&lt;/p>
+&lt;p style=" margin-top:9px; margin-bottom:9px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#181a1b;">&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#d3cfc9; background-color:#181a1b;">The X728 reserves the 40-pin header that can be stacked with other Raspberry Pi accessory boards for enhanced applications. The X728 can also be used with the&lt;/span>&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#d3cfc9;"> &lt;/span>&lt;a href="https://wiki.geekworm.com/X825">&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#66b1fa;">X825&lt;/span>&lt;/a>&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#d3cfc9;">/&lt;/span>&lt;a href="https://wiki.geekworm.com/X828">&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#66b1fa;">X828&lt;/span>&lt;/a>&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#d3cfc9;">/&lt;/span>&lt;a href="https://wiki.geekworm.com/X829">&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#66b1fa;">X829&lt;/span>&lt;/a>&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#d3cfc9;"> (2.5&amp;quot; HDD/SSD Shield) and &lt;/span>&lt;a href="https://wiki.geekworm.com/X857">&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#66b1fa;">X857&lt;/span>&lt;/a>&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#d3cfc9;">/&lt;/span>&lt;a href="https://wiki.geekworm.com/X862">&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#66b1fa;">X862&lt;/span>&lt;/a>&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#d3cfc9;">/&lt;/span>&lt;a href="https://wiki.geekworm.com/X872">&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#66b1fa;">X872&lt;/span>&lt;/a>&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#d3cfc9;"> (MSATA/M.2 SSD shield) for safe data backup.&lt;/span>&lt;/p>
+&lt;p style=" margin-top:9px; margin-bottom:9px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#181a1b;">&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#d3cfc9; background-color:#181a1b;">Video Test Max 5.1V 6000mA Output:&lt;/span>&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#d3cfc9;"> &lt;/span>&lt;a href="https://youtu.be/m_oIDrMEp0U">&lt;span style=" font-family:'sans-serif'; font-size:14px; color:#679fd5;">https://youtu.be/m_oIDrMEp0U&lt;/span>&lt;/a>&lt;/p>&lt;/body>&lt;/html></description>
+ <views>
+  <iconView>
+   <layers image="icon/x728_4379d6316505e2ca595619d9588920db_11_icon.svg">
+    <layer layerId="icon"/>
+   </layers>
+  </iconView>
+  <breadboardView>
+   <layers image="breadboard/x728_4379d6316505e2ca595619d9588920db_11_breadboard.svg">
+    <layer layerId="breadboard"/>
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers image="schematic/x728_4379d6316505e2ca595619d9588920db_11_schematic.svg">
+    <layer layerId="schematic"/>
+   </layers>
+  </schematicView>
+  <pcbView>
+   <layers image="pcb/x728_4379d6316505e2ca595619d9588920db_11_pcb.svg">
+    <layer layerId="copper0"/>
+    <layer layerId="silkscreen"/>
+    <layer layerId="copper1"/>
+   </layers>
+  </pcbView>
+ </views>
+ <connectors>
+  <connector type="male" id="connector0" name="GND">
+   <erc etype="ground">
+    <current flow="sink" valueMax="0.1"/>
+   </erc>
+   <description>Ground</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector0pin" layer="breadboard" legId="connector0leg"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector0pin" layer="copper0"/>
+     <p svgId="connector0pin" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector1" name="+5V">
+   <erc etype="VCC">
+    <voltage value="3.0"/>
+    <current flow="source" valueMax="0.1"/>
+   </erc>
+   <description>positive side</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector1pin" layer="breadboard" legId="connector1leg"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector1pin" layer="copper0"/>
+     <p svgId="connector1pin" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector2" name="+5V">
+   <erc etype="ground">
+    <current flow="sink" valueMax="0.1"/>
+   </erc>
+   <description>positive side</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector2pin" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector2pin" layer="schematic"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector2pin" layer="copper0"/>
+     <p svgId="connector2pin" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector3" name="I2C (RTC)">
+   <erc etype="ground">
+    <current flow="sink" valueMax="0.1"/>
+   </erc>
+   <description>I2C Interface (Real-time clock)</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector3pin" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector3pin" layer="schematic"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector3pin" layer="copper0"/>
+     <p svgId="connector3pin" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector4" name="I2C (RTC)">
+   <erc etype="ground">
+    <current flow="sink" valueMax="0.1"/>
+   </erc>
+   <description>I2C Interface (Real-time clock)</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector4pin" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector4pin" layer="schematic"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector4pin" layer="copper0"/>
+     <p svgId="connector4pin" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector5" name="I2C (RTC)">
+   <erc etype="ground">
+    <current flow="sink" valueMax="0.1"/>
+   </erc>
+   <description>I2C Interface (Real-time clock)</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector5pin" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector5pin" layer="schematic"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector5pin" layer="copper0"/>
+     <p svgId="connector5pin" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector6" name="GPIO 1">
+   <erc etype="ground">
+    <current flow="sink" valueMax="0.1"/>
+   </erc>
+   <description>GPIO 1</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector6pin" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector6pin" layer="schematic"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector6pin" layer="copper0"/>
+     <p svgId="connector6pin" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector7" name="GPIO 2">
+   <erc etype="ground">
+    <current flow="sink" valueMax="0.1"/>
+   </erc>
+   <description>GPIO 2</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector7pin" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector7pin" layer="schematic"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector7pin" layer="copper0"/>
+     <p svgId="connector7pin" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector8" name="GPIO 3 (AC LOSS DETECT)">
+   <erc etype="ground">
+    <current flow="sink" valueMax="0.1"/>
+   </erc>
+   <description>GPIO 3 (AC LOSS DETECT)</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector8pin" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector8pin" layer="schematic"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector8pin" layer="copper0"/>
+     <p svgId="connector8pin" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector9" name="GPIO 4 (BUZZER)">
+   <erc etype="ground">
+    <current flow="sink" valueMax="0.1"/>
+   </erc>
+   <description>GPIO 4 (BUZZER)</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector9pin" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector9pin" layer="schematic"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector9pin" layer="copper0"/>
+     <p svgId="connector9pin" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector10" name="GPIO 5">
+   <erc etype="ground">
+    <current flow="sink" valueMax="0.1"/>
+   </erc>
+   <description>GPIO 5</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector10pin" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector10pin" layer="schematic"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector10pin" layer="copper0"/>
+     <p svgId="connector10pin" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+ </connectors>
+ <url>https://wiki.geekworm.com/X728</url>
+</module>

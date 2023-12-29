@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module moduleId="dht11_02008e41c0fb1a2b432acbca962cd2be_1" referenceFile="Humidity_and_Temperature_Sensor_RHT03.fzp" fritzingVersion="0.7.0b.02.01.5801">
+ <author>Juraj Kavka</author>
+ <title>Humidity and Temperature Sensor DHT11</title>
+ <label>DHT11</label>
+ <date>Sat Jan 12 2019</date>
+ <tags>
+  <tag>temperatura</tag>
+  <tag>humidity</tag>
+  <tag>DHT11</tag>
+  <tag>temperature</tag>
+  <tag>humedad</tag>
+ </tags>
+ <properties>
+  <property name="family">AOSONG</property>
+  <property name="variant">variant 1</property>
+  <property name="U2">0-50°C</property>
+  <property name="U3">±5%RH ±2°C</property>
+  <property name="output signal">Digital Signal</property>
+  <property name="NA">DHT11</property>
+  <property name="U1">20-95%RH</property>
+  <property name="DC">3.3-5.5V DC</property>
+  <property name="part number"></property>
+  <property name="layer"></property>
+ </properties>
+ <description>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Newspaper'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Digital relative humidity &amp;amp; temperature sensor DHT11&lt;/p>&lt;/body>&lt;/html></description>
+ <views>
+  <iconView>
+   <layers image="icon/dht11_e9d0be438c3901b7ac9f1e52d42455dd_3_icon.svg">
+    <layer layerId="icon"/>
+   </layers>
+  </iconView>
+  <breadboardView>
+   <layers image="breadboard/dht11_e9d0be438c3901b7ac9f1e52d42455dd_3_breadboard.svg">
+    <layer layerId="breadboard"/>
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers image="schematic/dht11_e9d0be438c3901b7ac9f1e52d42455dd_3_schematic.svg">
+    <layer layerId="schematic"/>
+   </layers>
+  </schematicView>
+  <pcbView>
+   <layers image="pcb/dht11_e9d0be438c3901b7ac9f1e52d42455dd_3_pcb.svg">
+    <layer layerId="copper0"/>
+    <layer layerId="copper1"/>
+    <layer layerId="silkscreen"/>
+   </layers>
+  </pcbView>
+ </views>
+ <connectors>
+  <connector type="male" name="Vcc" id="connector8">
+   <description>3.3 V - 5.5V DC</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector8" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector8" layer="schematic" terminalId="connector8terminal"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector8pad" layer="copper0"/>
+     <p svgId="connector8pad" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" name="Data-signal" id="connector9">
+   <description>It goes directly connect to the digital signal and also it connects by a 1k ohm resistor with Vcc, It's something like this:
+
+Data-signal -> Digital Signal
+
+                   -> 1K ohm -> Vcc</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector9" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector9" layer="schematic" terminalId="connector9terminal"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector9pad" layer="copper0"/>
+     <p svgId="connector9pad" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" name="GND 1" id="connector10">
+   <description>Ground Connection</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector10" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector10" layer="schematic" terminalId="connector10terminal"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector10pad" layer="copper0"/>
+     <p svgId="connector10pad" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" name="GND 2" id="connector11">
+   <description>Ground connection</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector11" layer="breadboard"/>
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector11" layer="schematic" terminalId="connector11terminal"/>
+    </schematicView>
+    <pcbView>
+     <p svgId="connector11pad" layer="copper0"/>
+     <p svgId="connector11pad" layer="copper1"/>
+    </pcbView>
+   </views>
+  </connector>
+ </connectors>
+</module>

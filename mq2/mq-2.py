@@ -41,9 +41,12 @@ node_mq2_adc_voltage {adc_voltage}
 def write_metrics(gas_leaking, gas_detections, adc_voltage):
         with open(metrics_file, 'w+', encoding = 'utf-8') as f:
                 f.write(metrics.format(gas_leaking=gas_leaking,gas_detections=gas_detections,adc_voltage=adc_voltage))
+        print(f"gas_leaking: {gas_leaking} | gas_detections {gas_detections} | adc_voltage {adc_voltage}")
 
 def automagic(path = "/", query = {}):
-        try: f = request.urlopen(f'http://192.168.2.38:1122/{path}?password=gast&{urlencode(query, quote_via=quote_plus)}', timeout=.5)
+        url = f'http://192.168.2.38:1122/{path}?password=gast&{urlencode(query, quote_via=quote_plus)}'
+        print(url)
+        try: f = request.urlopen(url, timeout=.5)
         except: pass
 
 def init():
@@ -107,7 +110,7 @@ def main():
                 write_metrics(int(leaking), detections, voltage)
                 if leaking:
                         detections += 1
-                        buzz(50,50)
+                        buzz(5,500)
                         if detections == 1:
                                 automagic("screen/on")
                                 title = "Gas Leakage or Smoke Detected!"

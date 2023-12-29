@@ -5,6 +5,7 @@ from time import sleep
 import board
 import adafruit_dht
 import RPi.GPIO as GPIO
+from os import path, remove
  
 # Initial the dht device, with data pin connected to:
 # dhtDevice = adafruit_dht.DHT22(board.D4)
@@ -22,6 +23,7 @@ def buzz(duration_ms=200,delay_ms=0):
     GPIO.output(BUZZER_PIN, 0)
     sleep(delay_ms/1000)
 
+metrics_file = "/var/www/html/metrics/dht11"
 metrics = """
 # HELP room_ambient_temperature_celsius Room ambient temperature (Celsius)
 # TYPE room_ambient_temperature_celsius gauge
@@ -32,7 +34,7 @@ room_ambient_humidity {humidity}
 """
 
 def write_metrics(temperature_c, humidity):
-    with open("/var/www/html/metrics/dht11", 'w+', encoding = 'utf-8') as f:
+    with open(metrics_file, 'w+', encoding = 'utf-8') as f:
         f.write(metrics.format(temperature_c=temperature_c,humidity=humidity))
 
 def automagic(path = "/", query = {}):
@@ -76,11 +78,13 @@ while True:
         errors = 0
 
     except RuntimeError as error:
+        if path.exists(metrics_file): remove(metrics_file)
         errors += 1
         print(f"[{errors}] {error.args[0]}")
         sleep(2.0)
         continue
     except Exception as error:
+        if path.exists(metrics_file): remove(metrics_file)
         dhtDevice.exit()
         buzz(1000)
         automagic("notification/create", {"title": "DHT11 SHUT DOWN", "message": f"Too many errors: {errors}\n\n{error.args[0]}", "icon": "app.icon://com.android.cellbroadcastreceiver"})
